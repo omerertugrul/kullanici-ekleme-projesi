@@ -1,11 +1,12 @@
 class Kullanici {
-    constructor(ad, email) {
+    constructor(ad, email, numara) {
         this.ad = ad;
         this.email = email;
+        this.numara = numara;
     }
 
     bilgi() {
-        return `Ad: ${this.ad}, Email: ${this.email}`;
+        return `Ad: ${this.ad}, Email: ${this.email}, Numara: ${this.numara}`;
     }
 }
 
@@ -21,13 +22,14 @@ function verileriKaydet(kullanicilar) {
 function kullaniciEkle() {
     const ad = document.getElementById("ad").value;
     const email = document.getElementById("email").value;
+    const numara = document.getElementById("numara").value;
 
-    if (ad.trim() === "" || email.trim() === "") {
+    if (ad.trim() === "" || email.trim() === "" || numara.trim() === "") {
         alert("Lütfen tüm alanları doldurun!");
         return;
     }
 
-    const yeniKullanici = new Kullanici(ad, email);
+    const yeniKullanici = new Kullanici(ad, email, numara);
     const kullanicilar = verileriGetir();
     kullanicilar.push(yeniKullanici);
     verileriKaydet(kullanicilar);
@@ -35,6 +37,7 @@ function kullaniciEkle() {
 
     document.getElementById("ad").value = "";
     document.getElementById("email").value = "";
+    document.getElementById("numara").value = "";
 }
 
 function kullanicilariGoster() {
@@ -46,7 +49,7 @@ function kullanicilariGoster() {
     kullanicilar.forEach((kisi, index) => {
         const li = document.createElement("li");
         li.innerHTML = `
-            ${kisi.ad} - ${kisi.email}
+            ${kisi.ad} - ${kisi.email} - ${kisi.numara}
             <button onclick="kullaniciSil(${index})">Sil</button>
             <button onclick="kullaniciDuzenle(${index})">Düzenle</button>
         `;
@@ -67,6 +70,7 @@ function kullaniciDuzenle(index) {
 
     document.getElementById("ad").value = secilen.ad;
     document.getElementById("email").value = secilen.email;
+    document.getElementById("numara").value = secilen.numara;
 
     const btn = document.getElementById("ekleBtn");
     btn.textContent = "Güncelle";
@@ -74,14 +78,16 @@ function kullaniciDuzenle(index) {
     btn.onclick = function () {
         const yeniAd = document.getElementById("ad").value;
         const yeniEmail = document.getElementById("email").value;
+        const yeniNumara = document.getElementById("numara").value;
 
-        if (yeniAd.trim() === "" || yeniEmail.trim() === "") {
+        if (yeniAd.trim() === "" || yeniEmail.trim() === "" || yeniNumara.trim() === "") {
             alert("Boş alan bırakmayın!");
             return;
         }
 
         secilen.ad = yeniAd;
         secilen.email = yeniEmail;
+        secilen.numara = yeniNumara;
 
         kullanicilar[index] = secilen;
         verileriKaydet(kullanicilar);
@@ -89,6 +95,7 @@ function kullaniciDuzenle(index) {
 
         document.getElementById("ad").value = "";
         document.getElementById("email").value = "";
+        document.getElementById("numara").value = "";
         btn.textContent = "Ekle";
         btn.onclick = kullaniciEkle;
     };
